@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XXX Pallet Program</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #111; font-size: 15px; }
+    a { text-decoration: none; color: inherit; }
+
+    .topbar { background: #0f1923; color: #fff; font-size: 12px; text-align: center; padding: 8px; letter-spacing: 0.03em; }
+
+    nav { background: #fff; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 60px; position: sticky; top: 0; z-index: 50; }
+    .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; color: #444; font-weight: 500; }
+    .nav-links a:hover { color: #000; }
+    .nav-btn { background: #0f1923; color: #fff; font-size: 0.8rem; font-weight: 600; padding: 8px 18px; border-radius: 4px; }
+
+    .hero { background: #fff; padding: 5rem 5%; display: flex; flex-direction: column; align-items: center; text-align: center; border-bottom: 1px solid #e0e0e0; }
+    .hero-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 1.25rem; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; max-width: 600px; margin-bottom: 1.25rem; letter-spacing: -0.02em; }
+    .hero p { color: #555; max-width: 500px; line-height: 1.7; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; }
+    .btn { padding: 12px 28px; border-radius: 4px; font-size: 0.875rem; font-weight: 600; cursor: pointer; }
+    .btn-dark { background: #0f1923; color: #fff; }
+    .btn-light { background: #fff; color: #111; border: 1px solid #ccc; }
+
+    .section { padding: 4rem 5%; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.75rem; }
+    .section h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .section p { color: #555; line-height: 1.7; max-width: 600px; }
+
+    /* ── ENVIRONMENTAL SECTION ── */
+    .env-section { background: #f2f6f2; border-top: 1px solid #d6e4d6; border-bottom: 1px solid #d6e4d6; padding: 4rem 5%; }
+    .env-inner { max-width: 900px; margin: 0 auto; }
+    .env-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7a9e7a; margin-bottom: 0.75rem; }
+    .env-section h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; color: #111; }
+    .env-section .intro { color: #555; line-height: 1.7; max-width: 620px; margin-bottom: 2.5rem; }
+    .env-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .env-card { border: 1px solid #c4d9c4; border-radius: 8px; padding: 1.5rem; background: #fff; }
+    .env-card h3 { font-size: 0.875rem; font-weight: 600; color: #111; margin-bottom: 0.4rem; }
+    .env-card p { font-size: 0.82rem; color: #666; line-height: 1.65; }
+
+    /* ── HOW IT WORKS ── */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .step { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; }
+    .step-num { font-size: 0.72rem; font-weight: 700; color: #aaa; margin-bottom: 0.75rem; letter-spacing: 0.06em; }
+    .step h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .step p { font-size: 0.82rem; color: #777; line-height: 1.6; max-width: unset; }
+
+    /* ── PROGRAM DETAILS ── */
+    .alt-bg { background: #fff; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; }
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .detail { border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; background: #fafafa; }
+    .detail h3 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .detail p { font-size: 0.82rem; color: #777; line-height: 1.65; max-width: unset; }
+
+    .disclosure { background: #f0f0f0; border-top: 1px solid #ddd; padding: 2rem 5%; }
+    .disclosure p { max-width: 800px; margin: 0 auto; font-size: 0.75rem; color: #888; line-height: 1.7; }
+
+    footer { background: #0f1923; color: rgba(255,255,255,0.4); padding: 2.5rem 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: rgba(255,255,255,0.4); }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 640px) {
+      .details-grid, .env-grid { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">Pilot Program — Available to Individual Consumers</div>
+
+  <nav>
+    <div class="logo">XXX</div>
+    <ul class="nav-links">
+      <li><a href="#environmental">Environmental Benefits</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#program-details">Program Details</a></li>
+      <li><a href="#support">Support</a></li>
+    </ul>
+    <a href="#" class="btn nav-btn">Shop Pallets</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Pilot Program</div>
+    <h1>Mixed Merchandise Pallets for Individual Buyers</h1>
+    <p>Purchase a pallet of returned or overstock items from multiple categories at a single fixed price, with delivery available to your address.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-dark">View Available Pallets</a>
+      <a href="#how-it-works" class="btn btn-light">Learn More</a>
+    </div>
+  </div>
+
+  <!-- ENVIRONMENTAL BENEFITS -->
+  <div class="env-section" id="environmental">
+    <div class="env-inner">
+      <div class="env-label">Environmental Benefits</div>
+      <h2>A More Sustainable Way to Shop</h2>
+      <p class="intro">XXX emphasizes waste reduction and environmental benefits as a core part of this pilot program. By keeping usable products in circulation and reducing disposal, the program is designed to support more sustainable use of resources.</p>
+      <div class="env-grid">
+        <div class="env-card">
+          <h3>Reducing Waste</h3>
+          <p>Selling mixed pallets helps reduce waste by keeping returned and overstock products in circulation rather than sending them to disposal.</p>
+        </div>
+        <div class="env-card">
+          <h3>Sustainable Use of Resources</h3>
+          <p>The initiative supports more sustainable use of resources by extending the life of products that would otherwise go unused.</p>
+        </div>
+        <div class="env-card">
+          <h3>Lower Environmental Footprint</h3>
+          <p>The program helps decrease the environmental footprint associated with returned merchandise and traditional disposal processes.</p>
+        </div>
+        <div class="env-card">
+          <h3>Products That Stay in Circulation</h3>
+          <p>By connecting usable goods directly with buyers, XXX helps ensure products continue to serve their purpose instead of contributing to waste.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-label">How It Works</div>
+      <h2>Simple, Straightforward Process</h2>
+      <p>Each pallet is sold as a single unit at a fixed price. No bidding, no auctions.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">STEP 01</div>
+          <h3>Browse Pallets</h3>
+          <p>View available mixed merchandise pallets on XXX's program page.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP 02</div>
+          <h3>Purchase</h3>
+          <p>Buy your pallet at a fixed price through XXX's secure platform.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP 03</div>
+          <h3>Choose Delivery</h3>
+          <p>Select delivery to your address at checkout.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP 04</div>
+          <h3>Receive Your Pallet</h3>
+          <p>Your pallet arrives with a mix of items. Contents vary per pallet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRAM DETAILS -->
+  <div class="section alt-bg" id="program-details">
+    <div class="section-inner">
+      <div class="section-label">Program Details</div>
+      <h2>What to Know</h2>
+      <p>XXX provides basic program information for this pilot.</p>
+      <div class="details-grid">
+        <div class="detail">
+          <h3>Returned & Overstock Items</h3>
+          <p>Pallets contain a mix of returned or overstock items from multiple product categories.</p>
+        </div>
+        <div class="detail">
+          <h3>Fixed Price</h3>
+          <p>Each pallet is sold as a complete unit at a single fixed price.</p>
+        </div>
+        <div class="detail">
+          <h3>Safety Checked</h3>
+          <p>XXX states that all pallets are checked for safety before being listed in the program.</p>
+        </div>
+        <div class="detail">
+          <h3>Customer Support</h3>
+          <p>Support is available through XXX's platform for questions related to your purchase.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DISCLOSURE -->
+  <div class="disclosure" id="support">
+    <p><strong>Program Disclosure:</strong> This is a pilot program. Pallets include mixed merchandise (returned or overstock items) across multiple categories. Exact contents vary and some items may show signs of prior handling or shipping. Pallets are sold at a fixed price with delivery available. Customer support is provided through XXX's platform. This page provides basic program information only.</p>
+  </div>
+
+  <footer>
+    <div>© 2025 XXX Marketplace</div>
+    <div class="footer-links">
+      <a href="#">Terms of Use</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Customer Support</a>
+    </div>
+  </footer>
+
+</body>
+</html>
