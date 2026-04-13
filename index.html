@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LoadedCart Pallet Program</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #111; font-size: 15px; }
+    a { text-decoration: none; color: inherit; }
+
+    .topbar { background: #0f1923; color: #fff; font-size: 12px; text-align: center; padding: 8px; letter-spacing: 0.03em; }
+
+    nav { background: #fff; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 60px; position: sticky; top: 0; z-index: 50; }
+    .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; color: #444; font-weight: 500; }
+    .nav-links a:hover { color: #000; }
+
+    .hero { background: #fff; padding: 5rem 5%; display: flex; flex-direction: column; align-items: center; text-align: center; border-bottom: 1px solid #e0e0e0; }
+    .hero-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 1.25rem; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; max-width: 600px; margin-bottom: 1.25rem; letter-spacing: -0.02em; }
+    .hero p { color: #555; max-width: 500px; line-height: 1.7; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; }
+    .btn { padding: 12px 28px; border-radius: 4px; font-size: 0.875rem; font-weight: 600; cursor: pointer; }
+    .btn-dark { background: #0f1923; color: #fff; }
+    .btn-light { background: #fff; color: #111; border: 1px solid #ccc; }
+
+    .section { padding: 4rem 5%; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.75rem; }
+    .section h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .section p { color: #555; line-height: 1.7; max-width: 600px; }
+
+    /* ── ENVIRONMENTAL SECTION ── */
+    .env-section { background: #f2f6f2; border-top: 1px solid #d6e4d6; border-bottom: 1px solid #d6e4d6; padding: 4rem 5%; }
+    .env-inner { max-width: 900px; margin: 0 auto; }
+    .env-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7a9e7a; margin-bottom: 0.75rem; }
+    .env-section h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; color: #111; }
+    .env-section .intro { color: #555; line-height: 1.7; max-width: 620px; margin-bottom: 2.5rem; }
+    .env-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .env-card { border: 1px solid #c4d9c4; border-radius: 8px; padding: 1.5rem; background: #fff; }
+    .env-card h3 { font-size: 0.875rem; font-weight: 600; color: #111; margin-bottom: 0.4rem; }
+    .env-card p { font-size: 0.82rem; color: #666; line-height: 1.65; }
+
+    /* ── TECHNOLOGY ── */
+    .tech-section { background: #0f1923; border-top: 1px solid #1e2d3d; border-bottom: 1px solid #1e2d3d; padding: 4rem 5%; }
+    .tech-inner { max-width: 900px; margin: 0 auto; }
+    .tech-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #5a7a99; margin-bottom: 0.75rem; }
+    .tech-section h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; color: #fff; }
+    .tech-section .intro { color: #aab8c2; line-height: 1.7; max-width: 620px; margin-bottom: 2.5rem; }
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .tech-card { border: 1px solid #1e2d3d; border-radius: 8px; padding: 1.5rem; background: #16232f; }
+    .tech-card h3 { font-size: 0.875rem; font-weight: 600; color: #e0ecf4; margin-bottom: 0.4rem; }
+    .tech-card p { font-size: 0.82rem; color: #7a9ab2; line-height: 1.65; }
+    .tech-note { border: 1px solid #1e2d3d; border-radius: 8px; padding: 1.25rem 1.5rem; background: #16232f; }
+    .tech-note p { font-size: 0.82rem; color: #7a9ab2; line-height: 1.65; max-width: unset; }
+
+    /* ── FEATURED PALLETS ── */
+    .pallets-section { background: #fff; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; padding: 4rem 5%; }
+    .pallets-inner { max-width: 900px; margin: 0 auto; }
+    .pallets-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.75rem; }
+    .pallets-section h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .pallets-section .intro { color: #555; line-height: 1.7; max-width: 620px; margin-bottom: 2.5rem; }
+    .pallets-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+    .pallet-card { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; background: #fafafa; }
+    .pallet-img { background: #e8ecef; height: 140px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e0e0e0; }
+    .pallet-img svg { width: 56px; height: 56px; color: #999; }
+    .pallet-body { padding: 1.25rem; }
+    .pallet-body h3 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem; color: #111; }
+    .pallet-body .price { font-size: 1.1rem; font-weight: 700; color: #111; margin-bottom: 0.5rem; }
+    .pallet-body .desc { font-size: 0.78rem; color: #777; line-height: 1.6; margin-bottom: 0.6rem; }
+    .pallet-body .condition { font-size: 0.72rem; color: #999; line-height: 1.5; font-style: italic; }
+    .pallet-badge { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; margin-bottom: 0.5rem; }
+    .badge-popular { background: #e8f5e9; color: #2e7d32; }
+    .badge-new { background: #e3f2fd; color: #1565c0; }
+    .badge-value { background: #fff3e0; color: #e65100; }
+
+    /* ── HOW IT WORKS ── */
+    .alt-bg { background: #f9f9f9; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; }
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .detail { border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; background: #fff; }
+    .detail h3 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .detail p { font-size: 0.82rem; color: #777; line-height: 1.65; max-width: unset; }
+
+    /* ── CUSTOMER SUPPORT ── */
+    .support-section { background: #fff; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; padding: 3rem 5%; }
+    .support-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .support-inner h2 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .support-inner p { color: #555; line-height: 1.7; font-size: 0.875rem; max-width: 500px; margin: 0 auto; }
+    .support-inner .support-email { color: #111; font-weight: 600; }
+
+    .disclosure { background: #f0f0f0; border-top: 1px solid #ddd; padding: 2rem 5%; }
+    .disclosure p { max-width: 800px; margin: 0 auto; font-size: 0.75rem; color: #888; line-height: 1.7; }
+
+    footer { background: #0f1923; color: rgba(255,255,255,0.4); padding: 2.5rem 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: rgba(255,255,255,0.4); cursor: pointer; }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: #fff; border-radius: 8px; padding: 2rem; max-width: 420px; width: 90%; text-align: center; }
+    .modal-box h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .modal-box p { font-size: 0.85rem; color: #555; line-height: 1.6; margin-bottom: 1.25rem; }
+    .modal-close { background: #0f1923; color: #fff; border: none; padding: 8px 24px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+
+    @media (max-width: 768px) {
+      .pallets-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .details-grid, .env-grid, .cost-grid, .tech-grid, .info-grid { grid-template-columns: 1fr; }
+      .pallets-grid { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">Pilot Program — Available to Individual Consumers</div>
+
+  <nav>
+    <div class="logo">LoadedCart</div>
+    <ul class="nav-links">
+      <li><a href="#environmental">Environmental Benefits</a></li>
+      <li><a href="#technology">Technology</a></li>
+      <li><a href="#pallets">Available Pallets</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#customer-support">Support</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Pilot Program</div>
+    <h1>Mixed Merchandise Pallets for Individual Buyers</h1>
+    <p>Purchase a mixed merchandise pallet of returned or overstock items from multiple categories at a single fixed price, with delivery available to your address.</p>
+    <div class="hero-btns">
+      <a href="#pallets" class="btn btn-dark">View Available Pallets</a>
+      <a href="#environmental" class="btn btn-light">Learn More</a>
+    </div>
+  </div>
+
+  <!-- ENVIRONMENTAL BENEFITS -->
+  <div class="env-section" id="environmental">
+    <div class="env-inner">
+      <div class="env-label">Environmental Benefits</div>
+      <h2>A More Sustainable Way to Shop</h2>
+      <p class="intro">LoadedCart emphasizes waste reduction and environmental benefits as a core part of this pilot program. By keeping usable products in circulation and reducing disposal, the program is designed to support more sustainable use of resources.</p>
+      <div class="env-grid">
+        <div class="env-card">
+          <h3>Reducing Waste</h3>
+          <p>Selling mixed merchandise pallets helps reduce waste by keeping returned and overstock products in circulation rather than sending them to disposal.</p>
+        </div>
+        <div class="env-card">
+          <h3>Sustainable Use of Resources</h3>
+          <p>The initiative supports more sustainable use of resources by extending the life of products that would otherwise go unused.</p>
+        </div>
+        <div class="env-card">
+          <h3>Lower Environmental Footprint</h3>
+          <p>The program helps decrease the environmental footprint associated with returned merchandise and traditional disposal processes.</p>
+        </div>
+        <div class="env-card">
+          <h3>Products That Stay in Circulation</h3>
+          <p>By connecting usable goods directly with buyers, LoadedCart helps ensure products continue to serve their purpose instead of contributing to waste.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNOLOGY -->
+  <div class="tech-section" id="technology">
+    <div class="tech-inner">
+      <div class="tech-label">Digital Technology</div>
+      <h2>Powered by Technology You Can Trust</h2>
+      <p class="intro">This pilot program is supported by several digital technologies designed to improve transparency, quality assurance, and your overall experience.</p>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3>RFID &amp; Sensor Monitoring</h3>
+          <p>Pallets and items are tracked using RFID and sensor-enabled monitoring to improve traceability across handling and shipping.</p>
+        </div>
+        <div class="tech-card">
+          <h3>Blockchain-Based Records</h3>
+          <p>Key chain-of-custody and inspection checkpoints are logged using blockchain-based records to increase information credibility.</p>
+        </div>
+        <div class="tech-card">
+          <h3>AI-Powered Recommendations</h3>
+          <p>Our AI provides customized recommendations based on your preferences, helping you find pallets that match your interests.</p>
+        </div>
+      </div>
+      <div class="tech-note">
+        <p>These technologies are intended to reduce uncertainty about pallet condition and handling, and to help you make more informed decisions when purchasing mixed merchandise pallets.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED PALLETS -->
+  <div class="pallets-section" id="pallets">
+    <div class="pallets-inner">
+      <div class="pallets-label">Available Pallets</div>
+      <h2>Featured Mixed Merchandise Pallets</h2>
+      <p class="intro">Browse our current selection of mixed merchandise pallets. Each pallet is sold as a complete unit at a fixed price with delivery to your address.</p>
+      <div class="pallets-grid">
+        <div class="pallet-card">
+          <div class="pallet-img"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="28" width="48" height="24" rx="2"/><rect x="12" y="12" width="40" height="16" rx="2"/><line x1="8" y1="52" x2="8" y2="58"/><line x1="56" y1="52" x2="56" y2="58"/><line x1="4" y1="58" x2="60" y2="58"/><line x1="32" y1="52" x2="32" y2="58"/><line x1="32" y1="28" x2="32" y2="12"/></svg></div>
+          <div class="pallet-body">
+            <span class="pallet-badge badge-popular">Popular</span>
+            <h3>Mixed Electronics &amp; Home Goods</h3>
+            <div class="price">$149.99</div>
+            <p class="desc">Approx. 25–40 items including small electronics, kitchen gadgets, home accessories, and household essentials.</p>
+            <p class="condition">Items may be new, like-new, or show signs of prior handling. Exact contents vary by pallet.</p>
+          </div>
+        </div>
+        <div class="pallet-card">
+          <div class="pallet-img"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="28" width="48" height="24" rx="2"/><rect x="12" y="12" width="40" height="16" rx="2"/><line x1="8" y1="52" x2="8" y2="58"/><line x1="56" y1="52" x2="56" y2="58"/><line x1="4" y1="58" x2="60" y2="58"/><line x1="32" y1="52" x2="32" y2="58"/><line x1="32" y1="28" x2="32" y2="12"/></svg></div>
+          <div class="pallet-body">
+            <span class="pallet-badge badge-new">New Listing</span>
+            <h3>General Merchandise Mix</h3>
+            <div class="price">$199.99</div>
+            <p class="desc">Approx. 30–50 items spanning apparel, toys, personal care, home d&#233;cor, and general consumer products.</p>
+            <p class="condition">Items may be new, like-new, or show signs of prior handling. Exact contents vary by pallet.</p>
+          </div>
+        </div>
+        <div class="pallet-card">
+          <div class="pallet-img"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="28" width="48" height="24" rx="2"/><rect x="12" y="12" width="40" height="16" rx="2"/><line x1="8" y1="52" x2="8" y2="58"/><line x1="56" y1="52" x2="56" y2="58"/><line x1="4" y1="58" x2="60" y2="58"/><line x1="32" y1="52" x2="32" y2="58"/><line x1="32" y1="28" x2="32" y2="12"/></svg></div>
+          <div class="pallet-body">
+            <span class="pallet-badge badge-value">Best Value</span>
+            <h3>Overstock Essentials</h3>
+            <div class="price">$99.99</div>
+            <p class="desc">Approx. 20–30 items of overstock household essentials, cleaning supplies, and everyday basics.</p>
+            <p class="condition">Items are primarily new overstock. Some packaging may show signs of prior shipping.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section alt-bg" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-label">How It Works</div>
+      <h2>Program Information</h2>
+      <p>Here's what you need to know about the LoadedCart mixed merchandise pallet program.</p>
+      <div class="details-grid">
+        <div class="detail">
+          <h3>What's in a Pallet</h3>
+          <p>Each pallet contains a mix of returned or overstock items from multiple product categories. Exact contents vary and some items may show signs of prior handling.</p>
+        </div>
+        <div class="detail">
+          <h3>Fixed Pricing</h3>
+          <p>Every pallet is sold as a complete unit at a single fixed price. Pricing is listed with each pallet above.</p>
+        </div>
+        <div class="detail">
+          <h3>Safety &amp; Quality</h3>
+          <p>LoadedCart states that all pallets are checked for safety before being listed in the program. Items are inspected and cleared for resale.</p>
+        </div>
+        <div class="detail">
+          <h3>Delivery</h3>
+          <p>Pallets are available for delivery directly to your address. Shipping details are provided at checkout.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER SUPPORT -->
+  <div class="support-section" id="customer-support">
+    <div class="support-inner">
+      <h2>Customer Support</h2>
+      <p>Have questions about the pallet program or a recent purchase? Our support team is available to help.</p>
+      <p style="margin-top: 0.75rem;">Contact us at <span class="support-email">support@loadedcart.com</span></p>
+    </div>
+  </div>
+
+  <!-- DISCLOSURE -->
+  <div class="disclosure">
+    <p><strong>Program Disclosure:</strong> This is a pilot program. Pallets include mixed merchandise (returned or overstock items) across multiple categories. Exact contents vary and some items may show signs of prior handling or shipping. Pallets are sold at a fixed price with delivery available. Customer support is provided through LoadedCart's platform. This page provides basic program information only.</p>
+  </div>
+
+  <footer>
+    <div>&copy; 2025 LoadedCart Marketplace</div>
+    <div class="footer-links">
+      <a onclick="document.getElementById('modal-terms').classList.add('active')">Terms of Use</a>
+      <a onclick="document.getElementById('modal-privacy').classList.add('active')">Privacy Policy</a>
+      <a href="#customer-support">Customer Support</a>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="modal-terms" onclick="if(event.target===this)this.classList.remove('active')">
+    <div class="modal-box">
+      <h3>Terms of Use</h3>
+      <p>Full terms of use for the LoadedCart Pallet Program pilot are being finalized and will be available prior to the program's public launch. By browsing this site, you acknowledge that this is a pilot program and all purchases are subject to LoadedCart's standard marketplace terms.</p>
+      <button class="modal-close" onclick="document.getElementById('modal-terms').classList.remove('active')">Close</button>
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-privacy" onclick="if(event.target===this)this.classList.remove('active')">
+    <div class="modal-box">
+      <h3>Privacy Policy</h3>
+      <p>LoadedCart is committed to protecting your privacy. Personal information collected through this pilot program is handled in accordance with LoadedCart's standard privacy practices. A complete privacy policy specific to this program will be published before public launch.</p>
+      <button class="modal-close" onclick="document.getElementById('modal-privacy').classList.remove('active')">Close</button>
+    </div>
+  </div>
+
+</body>
+</html>
